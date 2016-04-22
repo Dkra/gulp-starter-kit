@@ -41,8 +41,22 @@ gulp.task('css', ['sass'], function() {
     .pipe($.sourcemaps.init())
     .pipe($.autoprefixer({browsers: ['last 1 version']}))
     .pipe($.postcss(processors))
+    .pipe($.uglify())
     .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('./build/css/'));
+});
+
+// Javascript Babel(es6) + Eslint +  uglify
+gulp.task('js', function() {
+  return gulp.src('src/js/**/*.js')
+    .pipe($.sourcemaps.init())
+    .pipe($.babel({
+      presets: ['es2015']
+    }))
+    .pipe($.uglify())
+    .pipe($.sourcemaps.write('.'))
+    .pipe($.concat('all.js'))
+    .pipe(gulp.dest('build/js'));
 });
 
 gulp.task('images', ['clean'], function() {
