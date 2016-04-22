@@ -12,6 +12,19 @@ gulp.task('clean', function() {
   return del(['build']);
 });
 
+gulp.task('clean:html', function() {
+  return del(['build/html']);
+});
+
+gulp.task('jade', ['clean:html'], function() {
+  var config = {
+      pretty: true
+  };
+
+  return gulp.src('./src/jade/**/*.jade')
+    .pipe($.jade(config))
+    .pipe(gulp.dest('build/html'));
+});
 
 gulp.task('sass', function() {
   return gulp.src('./src/sass/*.sass')
@@ -21,12 +34,12 @@ gulp.task('sass', function() {
 
 gulp.task('css', ['sass'], function() {
   var processors = [
-    autoprefixer({browsers: ['last 1 version']}),
-    cssnano(),
+    cssnano()
   ];
 
   return gulp.src('./build/css/*.css')
     .pipe($.sourcemaps.init())
+    .pipe($.autoprefixer({browsers: ['last 1 version']}))
     .pipe($.postcss(processors))
     .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('./build/css/'));
