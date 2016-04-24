@@ -1,6 +1,8 @@
+
 (function(window, document) {
 
   class Cat {
+
     constructor(name, age){
       this.name = name;
       this.age = age;
