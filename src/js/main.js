@@ -1,3 +1,4 @@
+alert('1');
 
 (function(window, document) {
 
